@@ -80,7 +80,7 @@ title($lng->getTrn('menu/admin_menu/nodes'));
 
 ?>
 <!-- Following HTML from ./admin/admin_nodes.php -->
-<b>Please note:</b> When deleting any node (i.e. tournaments, divisions or leagues) a "syncAll()" re-synchronisation should be run afterwards from the <a href='index.php?section=admin&amp;subsec=cpanel'>OBBLM core panel</a>.
+<b>Please note:</b> When deleting any node (i.e. tournaments, divisions or leagues) a "syncAll()" re-synchronisation should be run afterwards from the <a href='index.php?section=admin&amp;subsec=cpanel'>NAFLM core panel</a>.
 <table>
     <?php
     if (in_array(T_NODE_TOURNAMENT, $_SHOW)) {

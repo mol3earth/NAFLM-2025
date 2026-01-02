@@ -1,7 +1,7 @@
 <?php
 
 /* THIS FILE is used for MySQL-helper routines */
-// These are the OBBLM core tables.
+// These are the NAFLM core tables.
 // Commonly used col. defs.
 $CT_cols = array(
     T_OBJ_PLAYER => 'MEDIUMINT SIGNED',  # Negative IDs are stars.

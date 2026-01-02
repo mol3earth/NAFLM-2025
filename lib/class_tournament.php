@@ -6,7 +6,7 @@ define('TT_RROBIN', 2); # Round-Robin
 
 class Tour {
     /*
-        Please note: OBBLM also uses a match's "rounds" field to distinguish ordinary matches from semi-finals and finals.
+        Please note: NAFLM also uses a match's "rounds" field to distinguish ordinary matches from semi-finals and finals.
         This means, that some round numbers are reserved for the above purpose.
         See the constant definitions from class_match.php for reserved round numbers.
     */

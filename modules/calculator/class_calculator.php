@@ -721,7 +721,7 @@ class Calculator implements ModuleInterface
         }
         
         // For team reroll scenarios with multiple actions, use the proper combination calculation
-        if ($rerollType == 'team_reroll' && $numRerolls > 0 && count($actions) > 1) {
+        if ($rerollType == 'team_reroll' && $numRerolls > 0) {
             return self::calculateTeamRerollScenario($actions, $actionResults, $numRerolls, $rerollStrategy);
         }
         

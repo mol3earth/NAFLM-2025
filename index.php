@@ -2,7 +2,7 @@
 
 $time_start = microtime(true); # Used by MTS().
 
-/* Includes, constants, error_reporting() level, session_start(), OBBLM run requirements, MySQL connection, language load. */
+/* Includes, constants, error_reporting() level, session_start(), NAFLM run requirements, MySQL connection, language load. */
 require('header.php');
 
 /********************

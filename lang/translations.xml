@@ -4,7 +4,7 @@
 <!-- =================================================================
     PLEASE READ THIS CAREFULLY BEFORE TOUCHING THIS FILE !!
     =================================================================
-This is the main OBBLM XML translation file.
+This is the main NAFLM XML translation file.
 It must be encoded as UTF-8 to keep special characters from different languages.
 /!\ If you edit this file, please be extremly careful with encoding when saving !
 Remember : ENGLISH language is the default language and the most UP TO DATE.
@@ -273,7 +273,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <chmail>Change email</chmail>
     <chlogin>Change name (login)</chlogin>
     <chname>Change full name</chname>
-    <chtheme>Change OBBLM theme</chtheme>
+    <chtheme>Change NAFLM theme</chtheme>
     <chlang>Change language</chlang>
     <chhomelid>Change home league</chhomelid>
 </cc>
@@ -1716,7 +1716,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
         <!-- <tour_man> -->
         <import>Importar equipo</import>
         <schedule>Crear emparejamientos</schedule>
-        <cpanel>Panel central de OBBLM</cpanel>
+        <cpanel>Panel central de NAFLM</cpanel>
     </admin_menu>
     <plugins>Plugins</plugins>
     <rules>Reglas</rules>
@@ -1766,7 +1766,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <chmail>Cambiar email</chmail>
     <chlogin>Cambiar nombre (login)</chlogin>
     <chname>Cambiar nombre completo</chname>
-    <chtheme>Cambiar tema OBBLM</chtheme>
+    <chtheme>Cambiar tema NAFLM</chtheme>
     <chlang>Cambiar idioma</chlang>
     <chhomelid>Cambiar liga principal</chhomelid>
 </cc>
@@ -2522,7 +2522,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
         <tour_man>Verwaltung: Turniere</tour_man>
         <import>Mannschaft importieren</import>
         <schedule>Begegnung ansetzen</schedule>
-        <cpanel>OBBLM Kernbereich</cpanel>
+        <cpanel>NAFLM Kernbereich</cpanel>
     </admin_menu>
     <plugins>Plugins</plugins>
     <rules>Regeln</rules>
@@ -2572,7 +2572,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <chmail>E-Mailadresse  ändern</chmail>
     <chlogin>Namen ändern (login)</chlogin>
     <chname>Vollständigen Namen ändern</chname>
-    <chtheme>OBBLM Thema ändern</chtheme>
+    <chtheme>NAFLM Thema ändern</chtheme>
     <chlang>Sprache ändern</chlang>
     <chhomelid>Heimliga ändern</chhomelid>
 </cc>
@@ -3328,7 +3328,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
         <!-- <tour_man> -->
         <import>Importer une équipe</import>
         <schedule>Planifier un match</schedule>
-        <cpanel>OBBLM panneau principal</cpanel>
+        <cpanel>NAFLM panneau principal</cpanel>
     </admin_menu>
     <plugins>Modules</plugins>
     <rules>Règles</rules>
@@ -3378,7 +3378,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <chmail>Changer l'email</chmail>
     <chlogin>Changer le login (connexion)</chlogin>
     <chname>Changer le nom complet</chname>
-    <chtheme>Changer le thème OBBLM</chtheme>
+    <chtheme>Changer le thème NAFLM</chtheme>
     <chlang>Changer de langue</chlang>
     <chhomelid>Changer de ligue par défaut</chhomelid>
 </cc>
@@ -4134,7 +4134,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
         <!-- <tour_man> -->
         <import>Importa Squadra</import>
         <schedule>Inserisci Partita</schedule>
-        <cpanel>Pannello Principale OBBLM</cpanel>
+        <cpanel>Pannello Principale NAFLM</cpanel>
     </admin_menu>
     <plugins>Plugins</plugins>
     <rules>Regole</rules>
@@ -4184,7 +4184,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <chmail>Cambia email</chmail>
     <chlogin>Cambia nome (login)</chlogin>
     <chname>Cabia nome completo</chname>
-    <chtheme>Cambia tema OBBLM</chtheme>
+    <chtheme>Cambia tema NAFLM</chtheme>
     <chlang>Cambia lingua</chlang>
     <chhomelid>Change lega principale</chhomelid>
 </cc>

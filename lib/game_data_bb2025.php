@@ -3500,7 +3500,7 @@ foreach (array_keys($DEA) as $race) {
     $raceididx[$DEA[$race]['other']['race_id']] = $race;
 }
 /*  Special rules  *************************************************************************************** **
-    Note: Never change Special Rules ids after creating a team in OBBLM.
+    Note: Never change Special Rules ids after creating a team in NAFLM.
 ** ******************************************************************************************************** */
 $specialrulesarray    = array (
 	# Team leagues - DO NOT ALTER
@@ -3608,7 +3608,7 @@ foreach ($specialrulesarray as $rcat => $sprules) {
         $specialruleididx[$rid] = $rname;
 }
 /*  Player Keywords *************************************************************************************** **
-    Note: Never change Special Rules ids after creating a team in OBBLM.
+    Note: Never change Special Rules ids after creating a team in NAFLM.
 ** ******************************************************************************************************** */
 $playerkeywordsarray    = array (
 	# Racial and Positional keywords - DO NOT ALTER
@@ -3668,7 +3668,7 @@ foreach ($playerkeywordsarray as $kcat => $pkeyw) {
 }
 /*  Stars  ************************************************************************************************ **
     Note: The numbering of star ids must begin at the value specified in ID_STARS_BEGIN from the header file
-    Note: Never change star ids after using stars in OBBLM.
+    Note: Never change star ids after using stars in NAFLM.
 ** ******************************************************************************************************** */
 $stars = array(
 	//From BB2025 Rulebook

@@ -246,7 +246,7 @@ public static function getLeaguePreferences() {
 }
 
 function validate() {
-	return $this->p_tour != $this->s_tour;
+	return $this->p_tour != $this->s_tour && $this->p_tour > 0;
 }
 
 function save() {
@@ -370,8 +370,26 @@ public static function showLeaguePreferences() {
 	$submit_text = $lng->getTrn('submit_text', 'LeaguePref');
 	$submit_title = $lng->getTrn('submit_title', 'LeaguePref');
 
-	$rTours = array_reverse($tours, true);
+	// Get the selected league ID first
+	list($sel_lid, $HTML_LeagueSelector_temp) = HTMLOUT::simpleLeagueSelector();
+
+	// Filter tournaments to only those belonging to the selected league
+	// We need to join with divisions to get the league ID
+	$leagueTours = array();
+	$tourQuery = mysql_query("SELECT t.tour_id, t.name FROM tours t 
+							  INNER JOIN divisions d ON t.f_did = d.did 
+							  WHERE d.f_lid = $sel_lid");
+							  
+	if ($tourQuery && mysql_num_rows($tourQuery) > 0) {
+		while ($row = mysql_fetch_assoc($tourQuery)) {
+			$leagueTours[$row['tour_id']] = array('tname' => $row['name']);
+		}
+	}
+	$rTours = array_reverse($leagueTours, true);
+
+	// Now get the league preferences (this will echo the selector again)
 	$l_pref = self::getLeaguePreferences();
+	
 	// check this coach is allowed to administer this league
 	$canEdit = is_object($coach) && $coach->isNodeCommish(T_NODE_LEAGUE, $l_pref->lid) ? "" : "DISABLED";
     ?>
@@ -636,7 +654,12 @@ public static function handleActions() {
 				}
 			} else {
 				echo "<div class='boxWide'>";
-				HTMLOUT::helpBox($lng->getTrn('failedValidate', 'LeaguePref'), '', 'errorBox');
+				// Provide more specific error message
+				if ($l_pref->p_tour <= 0) {
+					HTMLOUT::helpBox('You must select a Primary Tournament before saving. If one does not appear as selectable you must first create a tournament.', '', 'errorBox');
+				} else {
+					HTMLOUT::helpBox($lng->getTrn('failedValidate', 'LeaguePref'), '', 'errorBox');
+				}
 				echo "</div>";
 			}
 		} else {
