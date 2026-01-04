@@ -58,9 +58,8 @@ public static function main($argv) {
     echo "<br>";
     $_rows = 0;
     foreach (self::getMemMatches($sel_node, $sel_node_id) as $d => $matches) {
-        $_container_style = 'float:left; width:50%;';
         if ($_rows == 0) {
-            echo "<div style='$_container_style'>";
+            echo "<div class='main_leftColumn'>";
         }
         ?>
         <div class="boxWide">
@@ -132,7 +131,7 @@ public static function main($argv) {
         <?php
         if (is_int(($_rows+1)/MMATCHES_BREAK)) {
             echo "</div>";
-            echo "<div style='$_container_style'>";
+            echo "<div class='main_rightColumn'>";
         }
         $_rows++;
     }
