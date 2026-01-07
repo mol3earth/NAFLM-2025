@@ -162,11 +162,6 @@ display: none !important;
     }
 
     /* Submenu Styles for Mobile */
-    /* First submenu elevate to first level */
-    ul.css3menu1>li:nth-of-type(1)>ul {
-        display: block !important;
-        position: static;
-    }
     ul.css3menu1 ul {
         display: none !important;
         position: absolute;

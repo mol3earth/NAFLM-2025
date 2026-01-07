@@ -1015,33 +1015,37 @@ class HTMLOUT
 		</label>
 		<!-- Following HTML from ./lib/class_htmlout.php make_menu -->
 		<ul class="css3menu1 topmenu">
-			<li class="topfirst"><a href="index.php?section=main"><?php echo $lng->getTrn('menu/home');?></a>
-			 <ul>
-				<?php 
-				if(Settings::getValueOrDefault('show-regional-menu', false)) { 
-					foreach(League::getLeaguesByLocation() as $locationName => $leagues) {
-						echo '<li><a href="#">' . $locationName . ' ></a><ul>';
-						
-						foreach($leagues as $league) {
-							echo '<li><a href="index.php?SLS_lid=' . $league->lid . '">' . $league->name . '</a></li>';
+			<li class="topfirst">
+				<a href="index.php?section=main">
+					<?php echo $lng->getTrn('menu/home');?>
+				</a>
+			</li>
+			<li class="topmenu">
+				<a rel="nofollow" href="#">Leagues</a>
+				<ul>
+					<?php 
+					if(Settings::getValueOrDefault('show-regional-menu', false)) { 
+						foreach(League::getLeaguesByLocation() as $locationName => $leagues) {
+							echo '<li><a href="#">' . $locationName . ' ></a><ul>';
+							
+							foreach($leagues as $league) {
+								echo '<li><a href="index.php?SLS_lid=' . $league->lid . '">' . $league->name . '</a></li>';
+							}
+							
+							echo '</ul></li>';
 						}
-						
-						echo '</ul></li>';
-					}
-					if (isset($_SESSION['logged_in'])) {
-						echo '<li><a href="index.php?section=requestleague">Request a League</a></li>';
-					} 
-					echo '<li><a href="http://www.thenaf.net/leagues/leagues-locator/" >TheNAF.net League Locator</a></li>';
-					echo '<li><a href="index.php?SLS_lid=1" >League Hosting Home</a></li>';
-				} ?>
-				<li><a href="index.php?section=about">About NAFLM</a></li>
-				<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSc-jjn6x86JGZwYw5Aei2ipyqIL1Q3taYmenUUlwiJPPT9V5w/viewform?usp=sharing&ouid=105502737038746244504">Request a League</a></li>
-			</ul>
-		</li>
+						if (isset($_SESSION['logged_in'])) {
+							echo '<li><a href="index.php?section=requestleague">Request a League</a></li>';
+						} 
+						echo '<li><a href="http://www.thenaf.net/leagues/leagues-locator/" >TheNAF.net League Locator</a></li>';
+						echo '<li><a href="index.php?SLS_lid=1" >League Hosting Home</a></li>';
+					} ?>
+					<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSc-jjn6x86JGZwYw5Aei2ipyqIL1Q3taYmenUUlwiJPPT9V5w/viewform?usp=sharing&ouid=105502737038746244504">Request a League</a></li>
+				</ul>
+			</li>
 		<?php
 		if (isset($_SESSION['logged_in'])) {
 		?>
-
 		<li class="topfirst"><a href="#">User Menu</a>
 			<ul>
 				<li class="subfirst"><a href="handler.php?type=teamcreator">Create a New Team</a></li>
@@ -1242,6 +1246,7 @@ class HTMLOUT
 		</ul>
 	</li>  
 
+	<li><a href="index.php?section=about">About NAFLM</a></li>
 	<?php
 		if (Module::isRegistered('Search')) {
 			?><li><a href="handler.php?type=search"><?php
