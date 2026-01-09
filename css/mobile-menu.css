@@ -7,18 +7,32 @@ display: none; /* Hide on desktop, show horizontal menu instead */
 display: none !important;
 }
 
+div.statsSelection {
+    display: inline;
+}
+
 /* Mobile Styles */
-@media (max-width: 768px) {
+@media (max-width: 500px) {
     /* font adjustments */
-    f1 {
+    div.banner > br {
         display: none;
     }
-    f2 {
+    f1 {
+        display: block !important;
+        position: absolute;
+        top: 31px;
+        left: 170px;
+        line-height: 38px;
+        margin: 0;
+        padding: 0px;
+    }
+    div.banner > f2 {
+        position: absolute;
+        top: 95px;
+        left: 170px;
         line-height: normal;
-        display: block;
-        font-size: 12px;
-        width: calc(100% - 160px);
-        margin: 15px 0 0 160px;
+        width: 55%;
+        margin: 0;
     }
     body, td, th, input, select, textarea {
         font-size: 12px;
@@ -63,6 +77,10 @@ display: none !important;
         line-height: 1.25;
     }
     /* form elements adjustments */
+    div.statsSelection {
+        display: block;
+        margin: 5px;
+    }
     select, input {
         padding: 10px;
     }
@@ -173,6 +191,8 @@ display: none !important;
         border-radius: 0px;
         box-shadow: none;
         border-color: #5f5f5f;
+        overflow-y: auto;
+        max-height: 90vh;
     }
 
     ul.css3menu1 li:hover > ul {
@@ -181,7 +201,10 @@ display: none !important;
 
     /* sub sub menus */
     ul.css3menu1 ul ul {
-        width: 93% !important;
+        width: 33vw !important;
+        position: fixed;
+        top: 7.6% !important;
+        left: 66vw !important;
     }
 
     /* Toggle Menu on Checkbox Check */
@@ -201,5 +224,11 @@ display: none !important;
 
     #menu-toggle:checked ~ .hamburger::after {
         transform: rotate(-45deg) translate(5px, -10px);
+    }
+}
+
+@media (max-width: 470px) {
+    f1 {
+        top: 12px;
     }
 }

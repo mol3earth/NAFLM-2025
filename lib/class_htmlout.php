@@ -578,31 +578,34 @@ class HTMLOUT
 		?>
 		<!-- Following HTML from ./lib/class_htmlout.php -->
 		<form method="POST">
-		<?php 
-		echo $lng->getTrn('common/displayfrom');
-		?>
-		<select <?php if ($hideNodes) {echo "style='display:none;'";}?> name="node" onChange="
-			selConst = Number(this.options[this.selectedIndex].value);
-			disableall();
-			switch(selConst)
-			{
-				case <?php echo T_NODE_TOURNAMENT;?>: document.getElementById('tour_in').style.display = 'inline'; break;
-				case <?php echo T_NODE_DIVISION;?>:   document.getElementById('division_in').style.display = 'inline'; break;
-				case <?php echo T_NODE_LEAGUE;?>:     document.getElementById('league_in').style.display = 'inline'; break;
-			}
-		">
+		<div class="statsSelection">
 			<?php
-			foreach (array(T_NODE_LEAGUE => $lng->getTrn('common/league'), T_NODE_DIVISION => $lng->getTrn('common/division'), T_NODE_TOURNAMENT => $lng->getTrn('common/tournament')) as $const => $name) {
-				echo "<option value='$const' ".(($_SESSION[$s_node] == $const) ? 'SELECTED' : '').">$name</option>\n";
-			}
+			echo $lng->getTrn('common/displayfrom');
 			?>
-		</select>
+			<select <?php if ($hideNodes) {echo "style='display:none;'";}?> name="node" onChange="
+				selConst = Number(this.options[this.selectedIndex].value);
+				disableall();
+				switch(selConst)
+				{
+					case <?php echo T_NODE_TOURNAMENT;?>: document.getElementById('tour_in').style.display = 'inline'; break;
+					case <?php echo T_NODE_DIVISION;?>:   document.getElementById('division_in').style.display = 'inline'; break;
+					case <?php echo T_NODE_LEAGUE;?>:     document.getElementById('league_in').style.display = 'inline'; break;
+				}
+			">
+				<?php
+				foreach (array(T_NODE_LEAGUE => $lng->getTrn('common/league'), T_NODE_DIVISION => $lng->getTrn('common/division'), T_NODE_TOURNAMENT => $lng->getTrn('common/tournament')) as $const => $name) {
+					echo "<option value='$const' ".(($_SESSION[$s_node] == $const) ? 'SELECTED' : '').">$name</option>\n";
+				}
+				?>
+			</select>
 		<?php
 		if (!$hideNodes) {echo ":";}
 		echo self::nodeList(T_NODE_TOURNAMENT, 'tour_in',     array(), array(), array('all' => true, 'sel_id' => ($_SESSION[$s_node] == T_NODE_TOURNAMENT) ? $_SESSION[$s_node_id] : null, 'extra_tags' => array('style="display:none;"'),  'hide_empty' => array(T_NODE_DIVISION)));
 		echo self::nodeList(T_NODE_DIVISION,   'division_in', array(), array(), array('all' => true, 'sel_id' => ($_SESSION[$s_node] == T_NODE_DIVISION)   ? $_SESSION[$s_node_id] : null, 'extra_tags' => array('style="display:none;"'),  'empty_str' => array(T_NODE_LEAGUE => '')));
 		echo self::nodeList(T_NODE_LEAGUE,     'league_in',   array(), array(), array('all' => true, 'sel_id' => ($_SESSION[$s_node] == T_NODE_LEAGUE)     ? $_SESSION[$s_node_id] : null, 'extra_tags' => array('style="display:none;"'),  'empty_str' => array(T_NODE_LEAGUE => ''), 'allow_all' => true));
+		echo "</div>";
 		if ($setState) {
+			echo "<div class=\"statsSelection\">";
 			echo $lng->getTrn('common/type');
 			?>
 			<select name="state_in" id="state_in">
@@ -611,9 +614,11 @@ class HTMLOUT
 				echo "<option value='".T_STATE_ACTIVE."'  ".(($_SESSION[$s_state] == T_STATE_ACTIVE) ? 'SELECTED' : '').">".$lng->getTrn('common/active')."</option>\n";
 				?>
 			</select>
+			</div>
 			<?php
 		}
 		if ($setRace) {
+			echo "<div class=\"statsSelection\">";
 			echo $lng->getTrn('common/race');
 			?>
 			<select name="race_in" id="race_in">
@@ -644,6 +649,7 @@ class HTMLOUT
 				}
 				?>
 			</select>
+			</div>
 			<?php
 		}
 		/*if ($setFormat || ($rules['dungeon'] == 0 || $rules['sevens'] == 0)) {
@@ -667,6 +673,7 @@ class HTMLOUT
 			<?php
 		}*/
 		if ($setSGrp) {
+			echo "<div class=\"statsSelection\">";
 			echo $lng->getTrn('common/sgrp');
 			?>
 			<select name="sgrp_in" id="sgrp_in">
@@ -677,9 +684,11 @@ class HTMLOUT
 				}
 				?>
 			</select>
+			</div>
 			<?php
 		}
 		if ($setFFilter) {
+			echo "<div class=\"statsSelection\">";
 			echo $lng->getTrn('common/having');
 			$FFilterFields = self::_getDefFields($obj, $_SESSION[$s_node], $_SESSION[$s_node_id]);
 			if (!in_array($_SESSION[$s_ffilter_field], array_keys($FFilterFields))) {
@@ -700,6 +709,7 @@ class HTMLOUT
 				<option value="<?php echo self::T_NS__ffilter_ineq_lt;?>" <?php echo ($_SESSION[$s_ffilter_ineq] == self::T_NS__ffilter_ineq_lt) ? 'SELECTED' : '';?>><=</option>
 			</select>
 			<input type='text' name="ffilter_limit_in" id="ffilter_limit_in" size='2' value="<?php echo $_SESSION[$s_ffilter_limit];?>">
+			</div>
 			<?php
 		}
 		?>
@@ -1015,34 +1025,30 @@ class HTMLOUT
 		</label>
 		<!-- Following HTML from ./lib/class_htmlout.php make_menu -->
 		<ul class="css3menu1 topmenu">
-			<li class="topfirst">
-				<a href="index.php?section=main">
-					<?php echo $lng->getTrn('menu/home');?>
-				</a>
-			</li>
-			<li class="topmenu">
-				<a rel="nofollow" href="#">Leagues</a>
-				<ul>
-					<?php 
-					if(Settings::getValueOrDefault('show-regional-menu', false)) { 
-						foreach(League::getLeaguesByLocation() as $locationName => $leagues) {
-							echo '<li><a href="#">' . $locationName . ' ></a><ul>';
-							
-							foreach($leagues as $league) {
-								echo '<li><a href="index.php?SLS_lid=' . $league->lid . '">' . $league->name . '</a></li>';
-							}
-							
-							echo '</ul></li>';
+			
+			<li class="topfirst"><a href="index.php?section=main"><?php echo $lng->getTrn('menu/home');?></a>
+			 <ul>
+				<?php 
+				if(Settings::getValueOrDefault('show-regional-menu', false)) { 
+					foreach(League::getLeaguesByLocation() as $locationName => $leagues) {
+						echo '<li><a href="#">' . $locationName . ' ></a><ul>';
+
+						foreach($leagues as $league) {
+							echo '<li><a href="index.php?SLS_lid=' . $league->lid . '">' . $league->name . '</a></li>';	
 						}
-						if (isset($_SESSION['logged_in'])) {
-							echo '<li><a href="index.php?section=requestleague">Request a League</a></li>';
-						} 
-						echo '<li><a href="http://www.thenaf.net/leagues/leagues-locator/" >TheNAF.net League Locator</a></li>';
-						echo '<li><a href="index.php?SLS_lid=1" >League Hosting Home</a></li>';
-					} ?>
-					<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSc-jjn6x86JGZwYw5Aei2ipyqIL1Q3taYmenUUlwiJPPT9V5w/viewform?usp=sharing&ouid=105502737038746244504">Request a League</a></li>
-				</ul>
-			</li>
+	
+						echo '</ul></li>';
+					}
+					if (isset($_SESSION['logged_in'])) {
+						echo '<li><a href="index.php?section=requestleague">Request a League</a></li>';
+					} 
+					echo '<li><a href="http://www.thenaf.net/leagues/leagues-locator/" >TheNAF.net League Locator</a></li>';
+					echo '<li><a href="index.php?SLS_lid=1" >League Hosting Home</a></li>';
+				} ?>
+				<li><a href="index.php?section=about">About NAFLM</a></li>
+				<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSc-jjn6x86JGZwYw5Aei2ipyqIL1Q3taYmenUUlwiJPPT9V5w/viewform?usp=sharing&ouid=105502737038746244504">Request a League</a></li>
+			</ul>
+		</li>
 		<?php
 		if (isset($_SESSION['logged_in'])) {
 		?>
