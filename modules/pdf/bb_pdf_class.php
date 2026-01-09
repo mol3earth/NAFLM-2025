@@ -127,7 +127,7 @@ function print_prow($p, $x, $y, $h, $bgcolor='#FFFFFF', $bordercolor='#000000', 
   $newfontsize=$fontsize;
   
   // Needs to correct fontsize and height for skills, if text doesn't fit
-  list($newheight, $newfontsize) = $this->FitTextInCell($h, 279, $fontsize, $p['skills']);
+  list($newheight, $newfontsize) = $this->FitTextInCell($h, 245, $fontsize, $p['skills']);
   if ($newheight<$h)
     $h=$newheight*2;
   $this->SetFontSize($fontsize);
