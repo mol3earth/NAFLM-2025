@@ -58,14 +58,14 @@ public static function main($argv) {
     echo "<br>";
     $_rows = 0;
     foreach (self::getMemMatches($sel_node, $sel_node_id) as $d => $matches) {
-        $_container_style = 'float:left; width:50%;';
         if ($_rows == 0) {
-            echo "<div style='$_container_style'>";
+            echo "<div class='main_leftColumn'>";
         }
         ?>
         <div class="boxWide">
             <div class="boxTitle<?php echo T_HTMLBOX_INFO;?>"><?php echo $lng->getTrn($d, __CLASS__); ?></div>
             <div class="boxBody">
+                <div class='tableResponsive'>
                 <table class="common">
                 <?php
                 if (empty($matches)) {
@@ -127,12 +127,13 @@ public static function main($argv) {
                 }
                 ?>
                 </table>
+                </div>
             </div>
         </div>
         <?php
         if (is_int(($_rows+1)/MMATCHES_BREAK)) {
             echo "</div>";
-            echo "<div style='$_container_style'>";
+            echo "<div class='main_rightColumn'>";
         }
         $_rows++;
     }

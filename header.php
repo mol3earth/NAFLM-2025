@@ -29,11 +29,11 @@ $credits = array(	'Pierluigi Masia',
 					'Goiz Ruiz de Gopegui',
 					'Ryan Williams',
 					'Ian Williams');
-define('NAFLM_VERSION', '2025.1');
-define('NAFLM_BUILD_DATE', '31st December 2025');
+define('NAFLM_VERSION', '2025.2');
+define('NAFLM_BUILD_DATE', '10th January 2026');
 define('CONTENT_VERSION', 'Blood Bowl 2025 - Third Season');
 define('CONTENT_DETAIL', 'Blood Bowl 2025 and up to and including Spike! #20');
-define('CONTENT_DATE', 'December 2025');
+define('CONTENT_DATE', 'January 2026');
 $naflmcredits = array(	
 						'Val Catella',
 						'Anthony Baez',
@@ -52,7 +52,8 @@ $naflmcredits = array(
 						'snotlingorc',
 						'thefloppy1',
 						'vanhu42',
-						'williamleonard (funnyfingers)'
+						'williamleonard (funnyfingers)',
+						'mol3earth'
 					  );
 define('MAX_RECENT_GAMES', 30); // This limits the number of rows shown in the "recent/upcoming games" tables.
 define('MAX_TNEWS', 3); // This number of entries are shown on the team news board.

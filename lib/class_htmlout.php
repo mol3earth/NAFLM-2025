@@ -578,31 +578,34 @@ class HTMLOUT
 		?>
 		<!-- Following HTML from ./lib/class_htmlout.php -->
 		<form method="POST">
-		<?php 
-		echo $lng->getTrn('common/displayfrom');
-		?>
-		<select <?php if ($hideNodes) {echo "style='display:none;'";}?> name="node" onChange="
-			selConst = Number(this.options[this.selectedIndex].value);
-			disableall();
-			switch(selConst)
-			{
-				case <?php echo T_NODE_TOURNAMENT;?>: document.getElementById('tour_in').style.display = 'inline'; break;
-				case <?php echo T_NODE_DIVISION;?>:   document.getElementById('division_in').style.display = 'inline'; break;
-				case <?php echo T_NODE_LEAGUE;?>:     document.getElementById('league_in').style.display = 'inline'; break;
-			}
-		">
+		<div class="statsSelection">
 			<?php
-			foreach (array(T_NODE_LEAGUE => $lng->getTrn('common/league'), T_NODE_DIVISION => $lng->getTrn('common/division'), T_NODE_TOURNAMENT => $lng->getTrn('common/tournament')) as $const => $name) {
-				echo "<option value='$const' ".(($_SESSION[$s_node] == $const) ? 'SELECTED' : '').">$name</option>\n";
-			}
+			echo $lng->getTrn('common/displayfrom');
 			?>
-		</select>
+			<select <?php if ($hideNodes) {echo "style='display:none;'";}?> name="node" onChange="
+				selConst = Number(this.options[this.selectedIndex].value);
+				disableall();
+				switch(selConst)
+				{
+					case <?php echo T_NODE_TOURNAMENT;?>: document.getElementById('tour_in').style.display = 'inline'; break;
+					case <?php echo T_NODE_DIVISION;?>:   document.getElementById('division_in').style.display = 'inline'; break;
+					case <?php echo T_NODE_LEAGUE;?>:     document.getElementById('league_in').style.display = 'inline'; break;
+				}
+			">
+				<?php
+				foreach (array(T_NODE_LEAGUE => $lng->getTrn('common/league'), T_NODE_DIVISION => $lng->getTrn('common/division'), T_NODE_TOURNAMENT => $lng->getTrn('common/tournament')) as $const => $name) {
+					echo "<option value='$const' ".(($_SESSION[$s_node] == $const) ? 'SELECTED' : '').">$name</option>\n";
+				}
+				?>
+			</select>
 		<?php
 		if (!$hideNodes) {echo ":";}
 		echo self::nodeList(T_NODE_TOURNAMENT, 'tour_in',     array(), array(), array('all' => true, 'sel_id' => ($_SESSION[$s_node] == T_NODE_TOURNAMENT) ? $_SESSION[$s_node_id] : null, 'extra_tags' => array('style="display:none;"'),  'hide_empty' => array(T_NODE_DIVISION)));
 		echo self::nodeList(T_NODE_DIVISION,   'division_in', array(), array(), array('all' => true, 'sel_id' => ($_SESSION[$s_node] == T_NODE_DIVISION)   ? $_SESSION[$s_node_id] : null, 'extra_tags' => array('style="display:none;"'),  'empty_str' => array(T_NODE_LEAGUE => '')));
 		echo self::nodeList(T_NODE_LEAGUE,     'league_in',   array(), array(), array('all' => true, 'sel_id' => ($_SESSION[$s_node] == T_NODE_LEAGUE)     ? $_SESSION[$s_node_id] : null, 'extra_tags' => array('style="display:none;"'),  'empty_str' => array(T_NODE_LEAGUE => ''), 'allow_all' => true));
+		echo "</div>";
 		if ($setState) {
+			echo "<div class=\"statsSelection\">";
 			echo $lng->getTrn('common/type');
 			?>
 			<select name="state_in" id="state_in">
@@ -611,9 +614,11 @@ class HTMLOUT
 				echo "<option value='".T_STATE_ACTIVE."'  ".(($_SESSION[$s_state] == T_STATE_ACTIVE) ? 'SELECTED' : '').">".$lng->getTrn('common/active')."</option>\n";
 				?>
 			</select>
+			</div>
 			<?php
 		}
 		if ($setRace) {
+			echo "<div class=\"statsSelection\">";
 			echo $lng->getTrn('common/race');
 			?>
 			<select name="race_in" id="race_in">
@@ -644,6 +649,7 @@ class HTMLOUT
 				}
 				?>
 			</select>
+			</div>
 			<?php
 		}
 		/*if ($setFormat || ($rules['dungeon'] == 0 || $rules['sevens'] == 0)) {
@@ -667,6 +673,7 @@ class HTMLOUT
 			<?php
 		}*/
 		if ($setSGrp) {
+			echo "<div class=\"statsSelection\">";
 			echo $lng->getTrn('common/sgrp');
 			?>
 			<select name="sgrp_in" id="sgrp_in">
@@ -677,9 +684,11 @@ class HTMLOUT
 				}
 				?>
 			</select>
+			</div>
 			<?php
 		}
 		if ($setFFilter) {
+			echo "<div class=\"statsSelection\">";
 			echo $lng->getTrn('common/having');
 			$FFilterFields = self::_getDefFields($obj, $_SESSION[$s_node], $_SESSION[$s_node_id]);
 			if (!in_array($_SESSION[$s_ffilter_field], array_keys($FFilterFields))) {
@@ -700,6 +709,7 @@ class HTMLOUT
 				<option value="<?php echo self::T_NS__ffilter_ineq_lt;?>" <?php echo ($_SESSION[$s_ffilter_ineq] == self::T_NS__ffilter_ineq_lt) ? 'SELECTED' : '';?>><=</option>
 			</select>
 			<input type='text' name="ffilter_limit_in" id="ffilter_limit_in" size='2' value="<?php echo $_SESSION[$s_ffilter_limit];?>">
+			</div>
 			<?php
 		}
 		?>
@@ -910,11 +920,13 @@ class HTMLOUT
 		<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 		<html>
 		<head>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 			<title><?php echo $settings['site_name']; ?></title>
 			<link type="text/css" href="css/stylesheet_default.css" rel="stylesheet">
 			<link type="text/css" href="css/stylesheet<?php echo $settings['stylesheet']; ?>.css" rel="stylesheet">
 			<link type="text/css" href="css/league_override_<?php echo self::getSelectedNodeLidOrDefault(); ?>.css" rel="stylesheet">
+			<link type="text/css" href="css/mobile-menu.css" rel="stylesheet">
 			<link rel="alternate" type="application/rss+xml" title="RSS Feed"href="rss.xml">
 			<script type="text/javascript" src="lib/misc_functions.js"></script>
 			<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
@@ -968,6 +980,7 @@ class HTMLOUT
 			<link type="text/css" href="css/stylesheet_default.css" rel="stylesheet">
 			<link type="text/css" href="css/stylesheet<?php echo $settings['stylesheet']; ?>.css" rel="stylesheet">
 			<link type="text/css" href="css/league_override_<?php echo self::getSelectedNodeLidOrDefault(); ?>.css" rel="stylesheet">
+			<link type="text/css" href="css/mobile-menu.css" rel="stylesheet">
 			<script type="text/javascript" src="lib/misc_functions.js"></script>
 			<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 			<script type="text/javascript" src="js/lib/underscore-1.8.3.min.js"></script>
@@ -1006,35 +1019,40 @@ class HTMLOUT
 	{
 		global $lng, $coach, $settings, $rules, $admin_menu;
 		?>
+		<input type="checkbox" id="menu-toggle">
+		<label for="menu-toggle" class="hamburger">
+			<span></span>
+		</label>
 		<!-- Following HTML from ./lib/class_htmlout.php make_menu -->
 		<ul class="css3menu1 topmenu">
-			<li class="topfirst"><a href="index.php?section=main"><?php echo $lng->getTrn('menu/home');?></a>
+			
+			<li class="topfirst"><a href="#"><?php echo $lng->getTrn('menu/home');?></a>
 			 <ul>
+				<li><a href="index.php?section=main">Home Page</a></li>
 				<?php 
 				if(Settings::getValueOrDefault('show-regional-menu', false)) { 
 					foreach(League::getLeaguesByLocation() as $locationName => $leagues) {
 						echo '<li><a href="#">' . $locationName . ' ></a><ul>';
-						
+
 						foreach($leagues as $league) {
-							echo '<li><a href="index.php?SLS_lid=' . $league->lid . '">' . $league->name . '</a></li>';
+							echo '<li><a href="index.php?SLS_lid=' . $league->lid . '">' . $league->name . '</a></li>';	
 						}
-						
+	
 						echo '</ul></li>';
 					}
 					if (isset($_SESSION['logged_in'])) {
 						echo '<li><a href="index.php?section=requestleague">Request a League</a></li>';
 					} 
 					echo '<li><a href="http://www.thenaf.net/leagues/leagues-locator/" >TheNAF.net League Locator</a></li>';
+					echo '<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSc-jjn6x86JGZwYw5Aei2ipyqIL1Q3taYmenUUlwiJPPT9V5w/viewform?usp=sharing&ouid=105502737038746244504">Request a League</a></li>';
 					echo '<li><a href="index.php?SLS_lid=1" >League Hosting Home</a></li>';
 				} ?>
 				<li><a href="index.php?section=about">About NAFLM</a></li>
-				<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSc-jjn6x86JGZwYw5Aei2ipyqIL1Q3taYmenUUlwiJPPT9V5w/viewform?usp=sharing&ouid=105502737038746244504">Request a League</a></li>
 			</ul>
 		</li>
 		<?php
 		if (isset($_SESSION['logged_in'])) {
 		?>
-
 		<li class="topfirst"><a href="#">User Menu</a>
 			<ul>
 				<li class="subfirst"><a href="handler.php?type=teamcreator">Create a New Team</a></li>
@@ -1122,35 +1140,35 @@ class HTMLOUT
 		<ul> 
 			<li class="subfirst"><a rel="nofollow" href="#">2025 Rosters ></a>
 				<ul>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=0" style="height:10px;line-height:10px;">Amazon</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=26" style="height:10px;line-height:10px;">Black Orc</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=30" style="height:10px;line-height:10px;">Bretonnian</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=1" style="height:10px;line-height:10px;">Chaos Chosen</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=2" style="height:10px;line-height:10px;">Chaos Dwarf</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=21" style="height:10px;line-height:10px;">Chaos Renegades</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=3" style="height:10px;line-height:10px;">Dark Elf</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=4" style="height:10px;line-height:10px;">Dwarf</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=5" style="height:10px;line-height:10px;">Elven Union</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=29" style="height:10px;line-height:10px;">Gnome</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=6" style="height:10px;line-height:10px;">Goblin</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=7" style="height:10px;line-height:10px;">Halfling</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=9" style="height:10px;line-height:10px;">Human</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=27" style="height:10px;line-height:10px;">Imperial Nobility</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=28" style="height:10px;line-height:10px;">Khorne</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=11" style="height:10px;line-height:10px;">Lizardmen</a></li>
-			    <li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=13" style="height:10px;line-height:10px;">Necromantic Horror</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=14" style="height:10px;line-height:10px;">Norse</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=15" style="height:10px;line-height:10px;">Nurgle</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=16" style="height:10px;line-height:10px;">Ogre</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=24" style="height:10px;line-height:10px;">Old World Alliance</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=12" style="height:10px;line-height:10px;">Orc</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=17" style="height:10px;line-height:10px;">Shambling Undead</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=19" style="height:10px;line-height:10px;">Skaven</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=25" style="height:10px;line-height:10px;">Snotling</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=10" style="height:10px;line-height:10px;">Tomb Kings</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=23" style="height:10px;line-height:10px;">Underworld Denizens</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=18" style="height:10px;line-height:10px;">Vampire</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=20" style="height:10px;line-height:10px;">Wood Elf</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=0" >Amazon</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=26" >Black Orc</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=30" >Bretonnian</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=1" >Chaos Chosen</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=2" >Chaos Dwarf</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=21" >Chaos Renegades</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=3" >Dark Elf</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=4" >Dwarf</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=5" >Elven Union</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=29" >Gnome</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=6" >Goblin</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=7" >Halfling</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=9" >Human</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=27" >Imperial Nobility</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=28" >Khorne</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=11" >Lizardmen</a></li>
+			    <li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=13" >Necromantic Horror</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=14" >Norse</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=15" >Nurgle</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=16" >Ogre</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=24" >Old World Alliance</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=12" >Orc</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=17" >Shambling Undead</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=19" >Skaven</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=25" >Snotling</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=10" >Tomb Kings</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=23" >Underworld Denizens</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=18" >Vampire</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=20" >Wood Elf</a></li>
 			</ul></li>
 			
 			<?php if ($rules['helf'] == 1)  : ?>
@@ -1158,78 +1176,78 @@ class HTMLOUT
 			<li class="subfirst"><a rel="nofollow" href="#">Teams of Legend Rosters ></a>
 			<ul>
 				<?php if ($rules['helf'] == 0)  : ?>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=8" style="height:10px;line-height:10px;">High Elf</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=8" >High Elf</a></li>
 				<?php endif; ?>
 			</ul></li>
 			<?php endif; ?>
 			
 			<?php if ($rules['slann'] == 0)  : ?>
 			<li class="subfirst"><a rel="nofollow" href="#">Optional Rosters ></a>
-				<ul><li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=22" style="height:10px;line-height:10px;">Slann</a></li>
+				<ul><li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=22" >Slann</a></li>
 			</ul></li>
 			<?php endif; ?>
 			
 			<?php if ($rules['dungeon'] == 0)  : ?>
 			<li class="subfirst"><a rel="nofollow" href="#">Dungeon Bowl Rosters ></a>
 				<ul>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=40" style="height:10px;line-height:10px;">College of Fire</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=41" style="height:10px;line-height:10px;">College of Shadow</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=42" style="height:10px;line-height:10px;">College of Metal</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=43" style="height:10px;line-height:10px;">College of Light</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=44" style="height:10px;line-height:10px;">College of Death</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=45" style="height:10px;line-height:10px;">College of Life</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=47" style="height:10px;line-height:10px;">College of Beasts</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=49" style="height:10px;line-height:10px;">College of Heavens</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=40" >College of Fire</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=41" >College of Shadow</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=42" >College of Metal</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=43" >College of Light</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=44" >College of Death</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=45" >College of Life</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=47" >College of Beasts</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=49" >College of Heavens</a></li>
 			</ul></li>
 			<?php endif; ?>
 			
 			<?php if ($rules['sevens'] == 0)  : ?>
 			<li class="subfirst"><a rel="nofollow" href="#">Sevens Rosters ></a>
 				<ul>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=60" style="height:10px;line-height:10px;">Sevens Amazon</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=86" style="height:10px;line-height:10px;">Sevens Black Orc</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=61" style="height:10px;line-height:10px;">Sevens Chaos Chosen</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=62" style="height:10px;line-height:10px;">Sevens Chaos Dwarf</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=81" style="height:10px;line-height:10px;">Sevens Chaos Renegades</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=63" style="height:10px;line-height:10px;">Sevens Dark Elf</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=64" style="height:10px;line-height:10px;">Sevens Dwarf</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=65" style="height:10px;line-height:10px;">Sevens Elven Union</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=89" style="height:10px;line-height:10px;">Sevens Gnome</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=66" style="height:10px;line-height:10px;">Sevens Goblin</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=67" style="height:10px;line-height:10px;">Sevens Halfling</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=68" style="height:10px;line-height:10px;">Sevens High Elf</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=69" style="height:10px;line-height:10px;">Sevens Human</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=87" style="height:10px;line-height:10px;">Sevens Imperial Nobility</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=88" style="height:10px;line-height:10px;">Sevens Khorne</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=71" style="height:10px;line-height:10px;">Sevens Lizardman</a></li>
-			    <li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=73" style="height:10px;line-height:10px;">Sevens Necromantic Horror</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=74" style="height:10px;line-height:10px;">Sevens Norse</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=75" style="height:10px;line-height:10px;">Sevens Nurgle</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=84" style="height:10px;line-height:10px;">Sevens Old World Alliance</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=76" style="height:10px;line-height:10px;">Sevens Ogre</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=72" style="height:10px;line-height:10px;">Sevens Orc</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=79" style="height:10px;line-height:10px;">Sevens Skaven</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=77" style="height:10px;line-height:10px;">Sevens Shambling Undead</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=82" style="height:10px;line-height:10px;">Sevens Slaan</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=85" style="height:10px;line-height:10px;">Sevens Snotling</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=70" style="height:10px;line-height:10px;">Sevens Tomb Kings</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=83" style="height:10px;line-height:10px;">Sevens Underworld Denizens</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=78" style="height:10px;line-height:10px;">Sevens Vampire</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=80" style="height:10px;line-height:10px;">Sevens Wood Elf</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=60" >Sevens Amazon</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=86" >Sevens Black Orc</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=61" >Sevens Chaos Chosen</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=62" >Sevens Chaos Dwarf</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=81" >Sevens Chaos Renegades</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=63" >Sevens Dark Elf</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=64" >Sevens Dwarf</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=65" >Sevens Elven Union</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=89" >Sevens Gnome</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=66" >Sevens Goblin</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=67" >Sevens Halfling</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=68" >Sevens High Elf</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=69" >Sevens Human</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=87" >Sevens Imperial Nobility</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=88" >Sevens Khorne</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=71" >Sevens Lizardman</a></li>
+			    <li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=73" >Sevens Necromantic Horror</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=74" >Sevens Norse</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=75" >Sevens Nurgle</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=84" >Sevens Old World Alliance</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=76" >Sevens Ogre</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=72" >Sevens Orc</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=79" >Sevens Skaven</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=77" >Sevens Shambling Undead</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=82" >Sevens Slaan</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=85" >Sevens Snotling</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=70" >Sevens Tomb Kings</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=83" >Sevens Underworld Denizens</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=78" >Sevens Vampire</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=80" >Sevens Wood Elf</a></li>
 			</ul></li>
 			<?php endif; ?>
 			
-			<li><a href="index.php?section=skills" style="height:10px;line-height:10px;">Skills & Traits List</a></li>
-			<li><a href="index.php?section=stars" style="height:10px;line-height:10px;">Star Players List</a></li>
+			<li><a href="index.php?section=skills" >Skills & Traits List</a></li>
+			<li><a href="index.php?section=stars" >Star Players List</a></li>
 			<li class="subfirst"><a rel="nofollow" href="#">Inducements ></a>
 				<ul>
-				<li><a href="index.php?section=inducements" style="height:10px;line-height:10px;">Inducements List</a></li>
-				<li><a href="index.php?section=ptn" style="height:10px;line-height:10px;">Prayers to Nuffle</a></li>
+				<li><a href="index.php?section=inducements" >Inducements List</a></li>
+				<li><a href="index.php?section=ptn" >Prayers to Nuffle</a></li>
 				</ul></li>
-			<li><a href="index.php?section=sequence" style="height:10px;line-height:10px;">Pre & Post Match Sequence</a></li>
-			<li><a href="index.php?section=cheatsheet" style="height:10px;line-height:10px;">Cheat Sheet</a></li>
-			<li><a href="handler.php?type=tournamentteam&obj=builder" style="height:10px;line-height:10px;">Tournament Team Builder</a></li>
-			<li><a href="handler.php?type=calculator" style="height:10px;line-height:10px;">Dice Probability Calculator</a></li>
+			<li><a href="index.php?section=sequence" >Pre & Post Match Sequence</a></li>
+			<li><a href="index.php?section=cheatsheet" >Cheat Sheet</a></li>
+			<li><a href="handler.php?type=tournamentteam&obj=builder" >Tournament Team Builder</a></li>
+			<li><a href="handler.php?type=calculator" >Dice Probability Calculator</a></li>
 			<li><a href="https://assets.warhammer-community.com/eng_14-11_bloodbowl_faq_errata-ngh7bivuzu-vslz4fw2nm.pdf">BB2025 Latest FAQ & Errata</a></li>
 			<li><a href="https://www.thenaf.net/wp-content/uploads/2025/12/NAF-FAQ-for-BB2025_v20251222_A4.pdf">BB2025 NAF Tournament Clarifications</a></li>
 		</ul>
@@ -1291,6 +1309,7 @@ class HTMLOUT
 		$CP = count($fields);
 		?>
 		<!-- Following HTML from ./lib/class_htmlout.php sort_table-->
+		<div class='tableResponsive'>
 		<table class="common" <?php echo (array_key_exists('tableWidth', $extra)) ? "style='width: $extra[tableWidth];'" : '';?>>
 			<tr class="commonhead">
 				<td colspan="<?php echo $CP;?>"><b>
@@ -1427,10 +1446,12 @@ class HTMLOUT
 			<?php
 			}
 		echo "</table>\n";
+		echo "</div>\n";
 	}
 	
 	public static function generateEStable($obj) {
 		global $ES_fields, $lng;
+		echo "<div class='tableResponsive'>\n";
 		echo "<table>\n";
 		echo "<tr><td><i>".$lng->getTrn('common/stat')."</i></td>
 			<td><i>".$lng->getTrn('common/alltime')."</i></td>
@@ -1448,7 +1469,8 @@ class HTMLOUT
 			}
 			echo "<tr valign='top'><td>$ESf</td><td align='right'>".$obj->{"mv_$ESf"}."</td><td align='right'>".sprintf("%1.2f",$objAVG->{"mv_$ESf"})."</td><td style='padding-left:10px;'>".$def['desc']."</td></tr>\n";
 		}
-		echo "</table>";
+		echo "</table>\n";
+		echo "</div>\n";
 	}
 	
 	private static $helpBoxIdx = 0;
