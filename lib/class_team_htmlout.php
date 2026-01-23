@@ -1030,9 +1030,9 @@ class Team_HTMLOUT extends Team
 		#cycolors .grey7 a {top:96px;left: 112px;}
 		</style>
 
-		<ul class="css3menu1 topmenu" style="position:static; z-index:0;">
-			<li class="topfirst"><a href="<?php echo $url.'&amp;subsec=man';?>"><?php echo $lng->getTrn('profile/team/tmanage');?></a></li>
-			<li class="topmenu"><a href="<?php echo $url.'&amp;subsec=news';?>"><?php echo $lng->getTrn('profile/team/news');?></a></li>
+		<ul class="rosterMenu" style="position:static; z-index:0;">
+			<li><a href="<?php echo $url.'&amp;subsec=man';?>"><?php echo $lng->getTrn('profile/team/tmanage');?></a></li>
+			<li><a href="<?php echo $url.'&amp;subsec=news';?>"><?php echo $lng->getTrn('profile/team/news');?></a></li>
 			<li><a href="<?php echo $url.'&amp;subsec=about';?>"><?php echo $lng->getTrn('common/about');?></a></li>
 			<li><a href="<?php echo $url.'&amp;subsec=games';?>"><?php echo $lng->getTrn('profile/team/games');?></a></li>
 			<?php
@@ -1057,12 +1057,7 @@ class Team_HTMLOUT extends Team
 				echo "<li><a href='handler.php?type=cemetery&amp;tid=$team->team_id'>".$lng->getTrn('name', 'Cemetery')."</a></li>\n";
 			}
 			?>
-			
-			<li class="toplast"><a>Roster</a>
-				<ul>
-					<?php if ($pdf)    { ?><li class="subfirst"><a TARGET="_blank" href="<?php echo $pdf;?>">PDF</a></li> <?php } ?>
-				</ul>
-			</li>
+			<?php if ($pdf)    { ?><li class="subfirst"><a TARGET="_blank" href="<?php echo $pdf;?>">PDF</a></li> <?php } ?>
 		</ul>
 		<br>
 		<?php

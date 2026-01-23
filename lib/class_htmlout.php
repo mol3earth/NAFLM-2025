@@ -1082,7 +1082,7 @@ class HTMLOUT
 						if (!is_array($desc)) {
 							echo "<li><a href='index.php?section=admin&amp;subsec=$lnk'>$desc</a></li>\n";
 						} else { 
-							echo '<li><a href="#">' . $desc['title'] . '<ul>';
+							echo '<li><a href="#">' . $desc['title'] . '</a><ul>';
 							foreach ($desc['sub'] as $sub) {
 								echo "<li><a href='index.php?section=admin&amp;subsec=$lnk&amp;$sub[href]'>$sub[title]</a></li>\n";
 							}

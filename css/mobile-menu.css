@@ -247,4 +247,37 @@ div.statsSelection {
         transform: rotate(-45deg) translate(5px, -9px);
         width: 35px;
     }
+
+    /* Roster Menu Adjustments */
+    ul.rosterMenu {
+        list-style: none !important;
+        display: block !important;
+        background: none !important;
+        border: none;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    ul.rosterMenu a {
+        padding: 10px;
+        display: block;
+        color: white;
+        text-decoration: none;
+        width: 100%;
+        background: #333;
+        border: none;
+    }
+    
+    ul.rosterMenu > li {
+        display: inline-flex !important;
+        width: 31%;
+        margin: 5px 2px;
+        /* background: #333; */
+    }
+}
+
+@media (max-width: 470px) {
+    f1 {
+        top: 1px;
+    }
 }
