@@ -166,6 +166,7 @@ public $randomskillrolls = 0;
 public $randomskillmanualentry = 0;
 public $megastars = 0;
 public $base_inducements = 0;
+public $fireunder11 = 0;
 public $major_win_tds = 0;
 public $major_win_pts = 0;
 public $clean_sheet_pts = 0;
@@ -174,7 +175,7 @@ public $major_beat_pts = 0;
 
 function __construct($lid, $name, $ptid, $stid, $league_name, $forum_url, $welcome, $rules, $existing, $theme_css, $core_theme_id, $tv, $language, $helf, $slann, 
 //$dungeon,  $sevens, 
-$randomskillrolls, $randomskillmanualentry, $megastars, $base_inducements, $major_win_tds, $major_win_pts, $clean_sheet_pts, $major_beat_cas, $major_beat_pts) {
+$randomskillrolls, $randomskillmanualentry, $megastars, $base_inducements, $fireunder11, $major_win_tds, $major_win_pts, $clean_sheet_pts, $major_beat_cas, $major_beat_pts) {
 	global $settings;
 	$this->lid = $lid;
 	$this->l_name = $name;
@@ -198,6 +199,7 @@ $randomskillrolls, $randomskillmanualentry, $megastars, $base_inducements, $majo
     $this->randomskillmanualentry = $randomskillmanualentry;
     $this->megastars = $megastars;
     $this->base_inducements = $base_inducements;
+    $this->fireunder11 = $fireunder11;
     $this->major_win_tds = $major_win_tds;
     $this->major_win_pts = $major_win_pts;
     $this->clean_sheet_pts = $clean_sheet_pts;
@@ -227,7 +229,7 @@ public static function getLeaguePreferences() {
 				$rules['helf'],$rules['slann'],
 				//$rules['dungeon'],$rules['sevens'],
 				$rules['randomskillrolls'],$rules['randomskillmanualentry'],
-				$rules['megastars'],$rules['base_inducements'],
+				$rules['megastars'],$rules['base_inducements'],$rules['fireunder11'],
 				$rules['major_win_tds'],$rules['major_win_pts'],$rules['clean_sheet_pts'],
 				$rules['major_beat_cas'],$rules['major_beat_pts']);
         }
@@ -239,7 +241,7 @@ public static function getLeaguePreferences() {
 			$rules['helf'],$rules['slann'],
 			//$rules['dungeon'],$rules['sevens'],
 			$rules['randomskillrolls'],$rules['randomskillmanualentry'],
-			$rules['megastars'],$rules['base_inducements'],
+			$rules['megastars'],$rules['base_inducements'],$rules['fireunder11'],
 			$rules['major_win_tds'],$rules['major_win_pts'],$rules['clean_sheet_pts'],
 			$rules['major_beat_cas'],$rules['major_beat_pts']);
 	}
@@ -306,6 +308,11 @@ function save() {
 		$settingsFileContents = preg_replace("/rules\['base_inducements'\]\s*=\s['A-Za-z0-9_]+/", "rules['base_inducements'] = $this->base_inducements", $settingsFileContents);
 	} else {
         $settingsFileContents = preg_replace("/rules\['base_inducements'\]\s*=\s['A-Za-z0-9_]+/", "rules['base_inducements'] = 0", $settingsFileContents);
+    }
+	if ($this->fireunder11 == 1) {
+		$settingsFileContents = preg_replace("/rules\['fireunder11'\]\s*=\s['A-Za-z0-9_]+/", "rules['fireunder11'] = $this->fireunder11", $settingsFileContents);
+	} else {
+        $settingsFileContents = preg_replace("/rules\['fireunder11'\]\s*=\s['A-Za-z0-9_]+/", "rules['fireunder11'] = 0", $settingsFileContents);
     }
 	if ($this->major_win_tds > 0) {
 		$settingsFileContents = preg_replace("/rules\['major_win_tds'\]\s*=\s['A-Za-z0-9_]+/", "rules['major_win_tds'] = $this->major_win_tds", $settingsFileContents);
@@ -577,6 +584,15 @@ public static function showLeaguePreferences() {
                             <b><?php echo $lng->getTrn('base_inducements', 'LeaguePref'); ?></b>
                         </td>                        
                     </tr>
+                    <tr title="<?php echo $lng->getTrn('fireunder11_help', 'LeaguePref'); ?>">
+                        <td>
+                            <?php echo $lng->getTrn('fireunder11_title', 'LeaguePref'); ?>
+                        </td>
+                        <td>     
+							<input type='checkbox' name='fireunder11' value='1' onclick='slideToggleFast("fireunder11");'	<?php if($rules['fireunder11'] == 1) {echo 'checked';}?>>
+                            <b><?php echo $lng->getTrn('fireunder11', 'LeaguePref'); ?></b>
+                        </td>                        
+                    </tr>
                     <tr title="<?php echo $lng->getTrn('randomskillrolls_help', 'LeaguePref'); ?>">
                         <td>
                             <?php echo $lng->getTrn('randomskillrolls_title', 'LeaguePref'); ?>
@@ -641,7 +657,7 @@ public static function handleActions() {
 				$_POST['helf'],$_POST['slann'],
 				//$_POST['dungeon'],$_POST['sevens'],
 				$_POST['randomskillrolls'],$_POST['randomskillmanualentry'],
-				$_POST['megastars'],$_POST['base_inducements'],
+				$_POST['megastars'],$_POST['base_inducements'],$_POST['fireunder11'],
 				$_POST['major_win_tds'],$_POST['major_win_pts'],$_POST['clean_sheet_pts'],
 				$_POST['major_beat_cas'],$_POST['major_beat_pts']);
 			if($l_pref->validate()) {

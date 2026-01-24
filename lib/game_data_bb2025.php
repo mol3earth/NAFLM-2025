@@ -3115,7 +3115,7 @@ $DEA = array (
             'team_league' 	=> array (5),
             'special_rules' => array (),
             'fav_rules' 	=> array (),
-            'icon' 			=> 'bretonnian.png',
+            'icon' 			=> 'imperial.png',
             'race_id' 		=> T_RACE_IMPERIAL, # (Imperial Nobility)
         ),
         'players'	=> array (

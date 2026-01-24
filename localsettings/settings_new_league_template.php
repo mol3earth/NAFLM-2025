@@ -75,6 +75,8 @@ $rules['randomskillmanualentry'] 	= 0; 	//Manual Random Skill Rolls
 $rules['megastars'] 				= 0; 	//Mega-Stars
 // Allow/disallow Inducements not in the main rulebook: 0 = enabled. 1 = disabled.
 $rules['base_inducements'] 			= 1; 	//Base Inducements Only
+// Allow/disallow coaches from firng players that would bring the team to under 11 players: 0 = disable. 1 = enabled.
+$rules['fireunder11'] 				= 0; 	//Allow firing under 11 players
 // Additional League Points.
 $rules['major_win_tds'] 			= 0; 	//Major Win for scoring how many TDs
 $rules['major_win_pts'] 			= 0; 	//Bonus points for a Major Win

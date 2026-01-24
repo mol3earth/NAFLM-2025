@@ -1030,9 +1030,9 @@ class Team_HTMLOUT extends Team
 		#cycolors .grey7 a {top:96px;left: 112px;}
 		</style>
 
-		<ul class="css3menu1 topmenu" style="position:static; z-index:0;">
-			<li class="topfirst"><a href="<?php echo $url.'&amp;subsec=man';?>"><?php echo $lng->getTrn('profile/team/tmanage');?></a></li>
-			<li class="topmenu"><a href="<?php echo $url.'&amp;subsec=news';?>"><?php echo $lng->getTrn('profile/team/news');?></a></li>
+		<ul class="rosterMenu" style="position:static; z-index:0;">
+			<li><a href="<?php echo $url.'&amp;subsec=man';?>"><?php echo $lng->getTrn('profile/team/tmanage');?></a></li>
+			<li><a href="<?php echo $url.'&amp;subsec=news';?>"><?php echo $lng->getTrn('profile/team/news');?></a></li>
 			<li><a href="<?php echo $url.'&amp;subsec=about';?>"><?php echo $lng->getTrn('common/about');?></a></li>
 			<li><a href="<?php echo $url.'&amp;subsec=games';?>"><?php echo $lng->getTrn('profile/team/games');?></a></li>
 			<?php
@@ -1057,12 +1057,7 @@ class Team_HTMLOUT extends Team
 				echo "<li><a href='handler.php?type=cemetery&amp;tid=$team->team_id'>".$lng->getTrn('name', 'Cemetery')."</a></li>\n";
 			}
 			?>
-			
-			<li class="toplast"><a>Roster</a>
-				<ul>
-					<?php if ($pdf)    { ?><li class="subfirst"><a TARGET="_blank" href="<?php echo $pdf;?>">PDF</a></li> <?php } ?>
-				</ul>
-			</li>
+			<?php if ($pdf)    { ?><li class="subfirst"><a TARGET="_blank" href="<?php echo $pdf;?>">PDF</a></li> <?php } ?>
 		</ul>
 		<br>
 		<?php
@@ -1896,7 +1891,7 @@ class Team_HTMLOUT extends Team
 					'retire'            => $lng->getTrn($base.'/box_tm/retire'),
 					'delete'            => $lng->getTrn($base.'/box_tm/delete'),
 				);				
-			# If random skills are turned oof in the settings, hide option
+			# If random skills are turned off in the settings, hide option
 			if ($rules['randomskillrolls'] == 1) {
 			unset($tmanage['random_skill']);
 			}
@@ -2108,12 +2103,44 @@ class Team_HTMLOUT extends Team
 					<select name="player">
 					<?php
 					$DISABLE = true;
+					
+					// Count rostered players (not sold, not dead, not retired, not journeymen)
+					$rostered_players = 0;
 					foreach ($players as $p) {
-						if ($p->is_dead || $p->is_sold || ( $p->is_captain && !$p->can_firecap))
+						if (!$p->is_dead && !$p->is_sold && !$p->is_retired && !$p->is_journeyman) {
+							$rostered_players++;
+						}
+					}
+					
+					foreach ($players as $p) {
+						// Skip dead, sold players and captains that can't be fired
+						if ($p->is_dead || $p->is_sold || ($p->is_captain && !$p->can_firecap))
 							continue;
-
-						echo "<option value='$p->player_id'>" . ($rules['player_refund'] ? (($p->value/1000)*$rules['player_refund'])."k refund | " : "") . "$p->nr $p->name</option>\n";
-						$DISABLE = false;
+						
+						// Determine if this player can be fired
+						$can_fire = false;
+						
+						// Journeymen can always be fired
+						if ($p->is_journeyman) {
+							$can_fire = true;
+						}
+						// Regular players: check global override or roster count
+						else {
+							// If global override is enabled, always allow firing
+							if ($rules['fireunder11'] == 1) {
+								$can_fire = true;
+							}
+							// Otherwise, only allow if team has more than 11 rostered players
+							else {
+								$can_fire = ($rostered_players > 11);
+							}
+						}
+						
+						// Only show player if they can be fired
+						if ($can_fire) {
+							echo "<option value='$p->player_id'>" . ($rules['player_refund'] ? (($p->value/1000)*$rules['player_refund'])."k refund | " : "") . "$p->nr $p->name</option>\n";
+							$DISABLE = false;
+						}
 					}
 					?>
 					</select>

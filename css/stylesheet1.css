@@ -109,7 +109,7 @@ div.banner {
     margin-left:0px;
     margin-bottom: 0px;
     margin-top: 10px;
-    background: url(../images/logo.png) left bottom no-repeat, url(../images/logo2.png) right bottom no-repeat, url(../images/bg_header.png) left bottom repeat-x;
+    background: url(../images/logo.png) left bottom no-repeat, url(../images/bg_header.png) left bottom repeat-x;
 	border: 1px solid black;
 	color: black;
 }
