@@ -194,24 +194,18 @@ class Player
 		if(!in_array("104",$current_skills)) {# check if player has right stuff.
 			$illegal_skills = array_merge($illegal_skills, array('32'));# add lethal flight to illegal skills if they do not.
         }
-		if(!in_array("91",$current_skills)) {# check if player has ball & chain. 
-			$illegal_skills = array_merge($illegal_skills, array('37'));# add violent innovator to illegal skills if they do not.
-        }
-		if(!in_array("93",$current_skills)) {# check if player has bombardier. 
-			$illegal_skills = array_merge($illegal_skills, array('37'));# add violent innovator to illegal skills if they do not.
-        }
-		if(!in_array("95",$current_skills)) {# check if player has chainsaw. 
-			$illegal_skills = array_merge($illegal_skills, array('37'));# add violent innovator to illegal skills if they do not.
-        }
-		if(!in_array("97",$current_skills)) {# check if player has projectile vomit. 
-			$illegal_skills = array_merge($illegal_skills, array('37'));# add violent innovator to illegal skills if they do not.
-        }
-		if(!in_array("106",$current_skills)) {# check if player has stab. 
-			$illegal_skills = array_merge($illegal_skills, array('37'));# add violent innovator to illegal skills if they do not.
-        }
-		if(!in_array("133",$current_skills)) {# check if player has breathe fire. 
-			$illegal_skills = array_merge($illegal_skills, array('37'));# add violent innovator to illegal skills if they do not.
-        }
+		// Check if player has Violent Innovator prerequisites (needs at least ONE of these)
+		$violentInnovatorPrereqs = array('91', '93', '95', '97', '106', '133'); // Ball & Chain, Bombardier, Chainsaw, Projectile Vomit, Stab, Breathe Fire
+		$hasViolentInnovatorPrereq = false;
+		foreach ($violentInnovatorPrereqs as $prereqSkill) {
+			if (in_array($prereqSkill, $current_skills)) {
+				$hasViolentInnovatorPrereq = true;
+				break;
+			}
+		}
+		if (!$hasViolentInnovatorPrereq) {
+			$illegal_skills = array_merge($illegal_skills, array('37')); // add violent innovator to illegal skills if they have NONE of the prereqs
+		}		
         foreach ($illegal_skills_arr as $hasSkill => $dropSkills) {
             $illegal_skills = array_merge($illegal_skills, $dropSkills);
         }
