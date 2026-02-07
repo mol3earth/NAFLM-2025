@@ -5109,10 +5109,10 @@ $inducements = array (
     ),
 	// Available to any team
     'Temp Agency Cheerleaders' => array (
-        'cost' => 20000,
+        'cost' => 5000,
         'max'  => 5,
 		'teamrules'  => array(0,1,2,3,4,5,6,7,8,9),
-        'reduced_cost' => 20000,
+        'reduced_cost' => 5000,
         'reduced_cost_races' => array(), // a particular race has a discout
         'reduced_cost_rules' => array(), // a special rule has a discout
         'reduced_max' => 5, // reduced race max
